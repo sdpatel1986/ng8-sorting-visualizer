@@ -1,0 +1,6 @@
+<app-top-bar></app-top-bar>
+<div id="cont" [ngStyle]="fontSize()">
+    <div *ngFor="let item of array$ | async; let i = index " class="bar" [ngStyle]="length(item.value, item.color)">
+      <p>{{item.value}}</p>
+    </div>
+</div>

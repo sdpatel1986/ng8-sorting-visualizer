@@ -1,0 +1,46 @@
+<div *ngIf="sorting$ | async; else elseBlock">
+    <header>
+        <div class="topElement">
+            <button type="button" (click)="generateArray()">Generate New array</button>
+        </div>
+        <div class="border"></div>
+        <div class="topElement">
+            <label for="volume">change Array size & sorting speed: </label>
+            <input type="range" id="start" name="volume" value="10" (input)="changeArrayLength($event)" min="4" max="100">
+        </div>
+        <div class="border"></div>
+        <div class="topElement">
+            <button class="algoButton" type="button" (click)="chooseAlgo('mergeSort')">Merge sort</button>
+            <button class="algoButton" type="button" (click)="chooseAlgo('quickSort')">Quick sort</button>
+            <button class="algoButton" type="button" (click)="chooseAlgo('heapSort')">Heap sort</button>
+            <button class="algoButton" type="button" (click)="chooseAlgo('bubbleSort')">Bubble sort</button>
+        </div>
+        <div class="border"></div>
+        <div class="topElement">
+            <button class="sortButton" type="button" (click)="sort()">Sort</button>
+        </div>
+    </header>
+</div>
+<ng-template #elseBlock>
+    <header>
+        <div class="topElement">
+            <button type="button" (click)="generateArray($event)" disabled>Generate New array</button>
+        </div>
+        <div class="border"></div>
+        <div class="topElement">
+            <label for="volume">change Array size & sorting speed: </label>
+            <input type="range" id="start" name="volume" value="10" (input)="changeArrayLength($event)" min="4" max="100" disabled>
+        </div>
+        <div class="border"></div>
+        <div class="topElement">
+            <button class="algoButton" type="button" (click)="chooseAlgo()" disabled>Merge sort</button>
+            <button class="algoButton" type="button" (click)="chooseAlgo()" disabled>Quick sort</button>
+            <button class="algoButton" type="button" (click)="chooseAlgo()" disabled>Heap sort</button>
+            <button class="algoButton" type="button" (click)="chooseAlgo()" disabled>Bubble sort</button>
+        </div>
+        <div class="border"></div>
+        <div class="topElement">
+            <button class="sortButton" type="button" (click)="sort()" disabled>Sort</button>
+        </div>
+    </header>
+</ng-template>
