@@ -21,6 +21,8 @@
     "@angular/router": "~8.2.0",
     "@angular/cli": "~8.2.2",
     "@angular-devkit/build-angular": "~0.802.2",
+    "@angular/compiler-cli": "~8.2.0",
+    "@angular/language-service": "~8.2.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
