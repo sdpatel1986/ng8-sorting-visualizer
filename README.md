@@ -1,8 +1,25 @@
 # SortingVisualizerClone
 
-see it live here: [Heroku Demo](https://ng8-sorting-visualizer.herokuapp.com/)
+See it live here: [Heroku Demo](https://ng8-sorting-visualizer.herokuapp.com/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
+
+Generates an interactive visualization of the algorithm.
+
+![Alt Text](https://media.giphy.com/media/cKVkHxEG3hyBCNs5mh/source.gif)
+
+## Features
+
+##### 1. Visualisations of the algorithms
+
+- **Quick sort, an efficient sorting algorithm, this algorithm takes O(n log n) comparisons to sort n items. But in worst case scenario it take up to O(n²).
+- **Merge sort, an other an efficient and general-purpose algorithm also take O(n log n) comparisons to sort n items.
+- **Heap sort, an other an efficient and general-purpose algorithm also take O(n log n) comparisons to sort n items.
+- **Buble sort, a simple algorithm but slow it take О(n²) comparisons to sort n items.
+
+##### 2. How it work
+
+Select an algorithm and then click on sort. You can also adjust the length of the array and the sorting speed as well as generate new array.
 
 ## Development server
 
