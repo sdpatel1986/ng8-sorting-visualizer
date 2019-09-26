@@ -1,4 +1,4 @@
-# SortingVisualizerClone
+# Angular Sorting Visualizer Tool
 
 See it live here: [Heroku Demo](https://ng8-sorting-visualizer.herokuapp.com/)
 
