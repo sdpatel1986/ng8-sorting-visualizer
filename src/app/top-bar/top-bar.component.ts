@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AlgoService } from '../algo.service';
+import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
   selector: 'app-top-bar',
@@ -10,8 +11,8 @@ import { AlgoService } from '../algo.service';
   styleUrls: ['./top-bar.component.scss']
 })
 export class TopBarComponent implements OnInit {
-  arrayLength = new BehaviorSubject<number>(4);
-  arrayLength$ = this.arrayLength.asObservable();
+  arrayLength: BehaviorSubject<number> = new BehaviorSubject<number>(4);
+  arrayLength$: Observable<number> = this.arrayLength.asObservable();
 
   selectedAlgo: string;
   sorting$: Observable<boolean>;
@@ -19,23 +20,23 @@ export class TopBarComponent implements OnInit {
     private algoService: AlgoService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sorting$ = this.algoService.sorting$;
   }
 
-  changeArrayLength(e) {
-    this.algoService.generateArray(e.target.value);
+  changeArrayLength(e: MatSliderChange): void {
+    this.algoService.generateArray(e.value);
   }
 
-  generateArray() {
+  generateArray(): void {
     this.algoService.generateArray();
   }
 
-  chooseAlgo(name) {
+  chooseAlgo(name: string): void {
     this.selectedAlgo = name;
   }
 
-  sort() {
+  sort(): void {
     if (this.selectedAlgo) {
       this.algoService[this.selectedAlgo]();
     }

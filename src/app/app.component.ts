@@ -9,14 +9,13 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'sorting-visualizer-clone';
   array$: Observable<any>;
   arrayLength: number;
   constructor(private algoService: AlgoService) {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.array$ = this.algoService.array$.pipe(tap(x => this.arrayLength = x.length));
   }
 
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
     return {'font-size': size + 'px'};
   }
 
-  length(value, color) {
+  length(value: string, color: string) {
     return {height: value + 'px', width: 50 / this.algoService.arrayNumber  + '%', 'background-color': color};
   }
 

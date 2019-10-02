@@ -1,46 +1,23 @@
-<div *ngIf="sorting$ | async; else elseBlock">
+<div>
     <header>
         <div class="topElement">
-            <button type="button" (click)="generateArray()">Generate New array</button>
+            <button mat-raised-button color="primary" (click)="generateArray()" [disabled]="!(sorting$ | async)">Generate New array</button>
         </div>
         <div class="border"></div>
         <div class="topElement">
-            <label for="volume">change Array size & sorting speed: </label>
-            <input type="range" id="start" name="volume" value="10" (input)="changeArrayLength($event)" min="4" max="100">
+            <span>Change Array size & sorting speed: </span>
+            <mat-slider value="10" color="primary" (input)="changeArrayLength($event)" min="4" max="100" [disabled]="!(sorting$ | async)"></mat-slider>
         </div>
         <div class="border"></div>
         <div class="topElement">
-            <button class="algoButton" type="button" (click)="chooseAlgo('mergeSort')">Merge sort</button>
-            <button class="algoButton" type="button" (click)="chooseAlgo('quickSort')">Quick sort</button>
-            <button class="algoButton" type="button" (click)="chooseAlgo('heapSort')">Heap sort</button>
-            <button class="algoButton" type="button" (click)="chooseAlgo('bubbleSort')">Bubble sort</button>
+            <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('mergeSort')" [disabled]="!(sorting$ | async)">Merge sort</button>
+            <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('quickSort')" [disabled]="!(sorting$ | async)">Quick sort</button>
+            <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('heapSort')" [disabled]="!(sorting$ | async)">Heap sort</button>
+            <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('bubbleSort')" [disabled]="!(sorting$ | async)">Bubble sort</button>
         </div>
         <div class="border"></div>
         <div class="topElement">
-            <button class="sortButton" type="button" (click)="sort()">Sort</button>
+            <button class="sortButton" mat-raised-button color="primary" (click)="sort()" [disabled]="!(sorting$ | async)">Sort</button>
         </div>
     </header>
 </div>
-<ng-template #elseBlock>
-    <header>
-        <div class="topElement">
-            <button type="button" disabled>Generate New array</button>
-        </div>
-        <div class="border"></div>
-        <div class="topElement">
-            <label for="volume">change Array size & sorting speed: </label>
-            <input type="range" id="start" name="volume" value="10" (input)="changeArrayLength($event)" min="4" max="100" disabled>
-        </div>
-        <div class="border"></div>
-        <div class="topElement">
-            <button class="algoButton" type="button" disabled>Merge sort</button>
-            <button class="algoButton" type="button" disabled>Quick sort</button>
-            <button class="algoButton" type="button" disabled>Heap sort</button>
-            <button class="algoButton" type="button" disabled>Bubble sort</button>
-        </div>
-        <div class="border"></div>
-        <div class="topElement">
-            <button class="sortButton" type="button" (click)="sort()" disabled>Sort</button>
-        </div>
-    </header>
-</ng-template>

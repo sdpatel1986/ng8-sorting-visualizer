@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ARRAY } from './interface';
@@ -9,25 +9,25 @@ import { ARRAY } from './interface';
   providedIn: 'root'
 })
 export class AlgoService {
-  array = new BehaviorSubject<ARRAY[]>(null);
-  array$ = this.array.asObservable();
-  sorting = new BehaviorSubject<boolean>(false);
-  sorting$ = this.sorting.asObservable().pipe(map( x => !x));
+  array: BehaviorSubject<ARRAY[]> = new BehaviorSubject<ARRAY[]>(null);
+  array$: Observable<ARRAY[]> = this.array.asObservable();
+  sorting: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  sorting$: Observable<boolean> = this.sorting.asObservable().pipe(map( x => !x));
   arrayNumber: number;
 
   constructor() {
     this.generateArray(10);
   }
 
-  generateArray(n?) {
-    this.arrayNumber = n ? parseInt(n, 10) : this.arrayNumber;
+  generateArray(n?: number): void {
+    this.arrayNumber = n ? n : this.arrayNumber;
     const array: ARRAY[] = new Array(this.arrayNumber).fill(0).map(() => {
-      return {value: Math.ceil(Math.random() * 400), color: 'cadetblue'};
+      return {value: Math.ceil(Math.random() * 400), color: '#2FAFAF'};
     });
     this.array.next(array);
   }
 
-  mergeSort() {
+  mergeSort(): void {
     this.sorting.next(true);
     const arr = JSON.parse(JSON.stringify(this.array.getValue())).map((x, i) => {
       x.idx = i;
@@ -62,47 +62,47 @@ export class AlgoService {
       first.map(x => {
         smallIdx = x.idx < smallIdx ? x.idx : smallIdx;
       });
-      first[0].color = 'lime';
-      second[0].color = 'lime';
+      first[0].color = '#E06C6D';
+      second[0].color = '#E06C6D';
       change.push(sortIndex(smallIdx, sortedArray, first, second));
       while (first.length && second.length) {
         if (first[0].value <= second[0].value) {
           sortedArray.push(first.shift());
         } else {
-          first[0].color = 'crimson';
-          second[0].color = 'crimson';
+          first[0].color = '#90ED7D';
+          second[0].color = '#90ED7D';
           change.push(sortIndex(smallIdx, sortedArray, first, second));
 
           sortedArray.push(second.shift());
 
-          sortedArray[sortedArray.length - 1].color = 'lime';
-          first[0].color = 'lime';
+          sortedArray[sortedArray.length - 1].color = '#E06C6D';
+          first[0].color = '#E06C6D';
           change.push(sortIndex(smallIdx, sortedArray, first, second));
         }
 
         if (isFinalMerge) {
-          sortedArray[sortedArray.length - 1].color = 'rebeccapurple';
+          sortedArray[sortedArray.length - 1].color = '#2FAFAF';
         } else {
           sortedArray.map(x => {
-            x.color = 'cadetblue';
+            x.color = '#8085E9';
             return x;
           });
         }
         first.map(x => {
-          x.color = 'cadetblue';
+          x.color = '#8085E9';
           return x;
         });
         second.map(x => {
-          x.color = 'cadetblue';
+          x.color = '#8085E9';
           return x;
         });
 
         if (first.length && second.length) {
-          first[0].color = 'lime';
-          second[0].color = 'lime';
+          first[0].color = '#E06C6D';
+          second[0].color = '#E06C6D';
         } else if (isFinalMerge) {
-          if (first.length) {first[0].color = 'rebeccapurple'; }
-          if (second.length) {second[0].color = 'rebeccapurple'; }
+          if (first.length) {first[0].color = '#2FAFAF'; }
+          if (second.length) {second[0].color = '#2FAFAF'; }
         }
 
         change.push(sortIndex(smallIdx, sortedArray, first, second));
@@ -121,11 +121,11 @@ export class AlgoService {
     }
   }
 
-  mergeChange(change) {
+  mergeChange(change): void {
     const arr = this.array.getValue();
     if (!change.length) {
       arr.forEach(el => {
-        el.color = 'rebeccapurple';
+        el.color = '#2FAFAF';
       });
       this.sorting.next(false);
       return;
@@ -138,7 +138,7 @@ export class AlgoService {
     setTimeout(() => this.mergeChange(change), 4000 / this.arrayNumber);
   }
 
-  quickSort() {
+  quickSort(): void {
     this.sorting.next(true);
     const change = [];
     const arr: any = JSON.parse(JSON.stringify(this.array.getValue())); // avoid shallow copy of behaviorSubject value
@@ -151,7 +151,7 @@ export class AlgoService {
             continue;
           }
           sorted.push({
-            index: end, value: array[end].value, color: 'rebeccapurple'
+            index: end, value: array[end].value, color: '#2FAFAF'
           });
         }
         change.push(sorted);
@@ -163,23 +163,23 @@ export class AlgoService {
       let right = end;
       change.push([
         {index: start, value: array[start].value, color: 'yellow'},
-        {index: start + 1, value: array[start + 1].value, color: 'lime'},
-        {index: end, value: array[end].value, color: 'lime'}
+        {index: start + 1, value: array[start + 1].value, color: '#E06C6D'},
+        {index: end, value: array[end].value, color: '#E06C6D'}
       ]);
 
       while (right >= left) {
         if (array[right].value < array[pivot].value && array[left].value > array[pivot].value) {
           change.push([
-            {index: right, value: array[right].value, color: 'crimson'},
-            {index: left, value: array[left].value, color: 'crimson'},
+            {index: right, value: array[right].value, color: '#90ED7D'},
+            {index: left, value: array[left].value, color: '#90ED7D'},
           ],
           [
-            {index: right, value: array[left].value, color: 'crimson'},
-            {index: left, value: array[right].value, color: 'crimson'},
+            {index: right, value: array[left].value, color: '#90ED7D'},
+            {index: left, value: array[right].value, color: '#90ED7D'},
           ],
           [
-            {index: right, value: array[left].value, color: 'lime'},
-            {index: left, value: array[right].value, color: 'lime'},
+            {index: right, value: array[left].value, color: '#E06C6D'},
+            {index: left, value: array[right].value, color: '#E06C6D'},
           ]);
           const temp = array[right];
           array[right] = array[left];
@@ -189,12 +189,12 @@ export class AlgoService {
         if (array[right].value >= array[pivot].value) {
           if (right - 1 >= left) {
             change.push([
-              {index: right, value: array[right].value, color: 'cadetblue'},
-              {index: right - 1, value: array[right - 1].value, color: 'lime'},
+              {index: right, value: array[right].value, color: '#8085E9'},
+              {index: right - 1, value: array[right - 1].value, color: '#E06C6D'},
             ]);
           } else {
             change.push([
-              {index: right, value: array[right].value, color: 'cadetblue'},
+              {index: right, value: array[right].value, color: '#8085E9'},
             ]);
           }
           right--;
@@ -203,15 +203,15 @@ export class AlgoService {
         if (array[left].value <= array[pivot].value) {
           if (right >= left + 1) {
             change.push([
-              {index: left, value: array[left].value, color: 'cadetblue'},
-              {index: left + 1, value: array[left + 1].value, color: 'lime'},
+              {index: left, value: array[left].value, color: '#8085E9'},
+              {index: left + 1, value: array[left + 1].value, color: '#E06C6D'},
             ]);
           } else {
             if (pivot !== right) {
 
             } else {
               change.push([
-                {index: left, value: array[left].value, color: 'cadetblue'},
+                {index: left, value: array[left].value, color: '#8085E9'},
               ]);
             }
           }
@@ -223,24 +223,24 @@ export class AlgoService {
       if (pivot !== right) {
         change.push(
         [
-          {index: right, value: array[right].value, color: 'crimson'},
-          {index: pivot, value: array[pivot].value, color: 'crimson'},
+          {index: right, value: array[right].value, color: '#90ED7D'},
+          {index: pivot, value: array[pivot].value, color: '#90ED7D'},
         ],
         [
-          {index: right, value: array[pivot].value, color: 'crimson'},
-          {index: pivot, value: array[right].value, color: 'crimson'},
+          {index: right, value: array[pivot].value, color: '#90ED7D'},
+          {index: pivot, value: array[right].value, color: '#90ED7D'},
         ],
         [
-          {index: right, value: array[pivot].value, color: 'rebeccapurple'},
-          {index: pivot, value: array[right].value, color: 'cadetblue'},
+          {index: right, value: array[pivot].value, color: '#2FAFAF'},
+          {index: pivot, value: array[right].value, color: '#8085E9'},
         ]);
         const temp = array[right];
         array[right] = array[pivot];
         array[pivot] = temp;
       } else {
         change.push([
-          {index: right, value: array[right].value, color: 'rebeccapurple'},
-          {index: pivot, value: array[pivot].value, color: 'rebeccapurple'},
+          {index: right, value: array[right].value, color: '#2FAFAF'},
+          {index: pivot, value: array[pivot].value, color: '#2FAFAF'},
         ]);
       }
 
@@ -251,7 +251,7 @@ export class AlgoService {
     this.showChange(change);
   }
 
-  heapSort() {
+  heapSort(): void {
     this.sorting.next(true);
     const array = JSON.parse(JSON.stringify(this.array.getValue())); // avoid shallow copy of behaviorSubject value
     const change = [];
@@ -268,23 +268,23 @@ export class AlgoService {
       }
       change.push(
         [
-          {index: end, value: array[end].value, color: 'lime'},
-          {index: 0, value: array[0].value, color: 'lime'}
+          {index: end, value: array[end].value, color: '#E06C6D'},
+          {index: 0, value: array[0].value, color: '#E06C6D'}
         ],
         [
-          {index: end, value: array[end].value, color: 'crimson'},
-          {index: 0, value: array[0].value, color: 'crimson'}
+          {index: end, value: array[end].value, color: '#90ED7D'},
+          {index: 0, value: array[0].value, color: '#90ED7D'}
         ],
         [
-          {index: end, value: array[0].value, color: 'crimson'},
-          {index: 0, value: array[end].value, color: 'crimson'}
+          {index: end, value: array[0].value, color: '#90ED7D'},
+          {index: 0, value: array[end].value, color: '#90ED7D'}
         ],
         [
-          {index: end, value: array[0].value, color: 'lime'},
-          {index: 0, value: array[end].value, color: 'lime'}
+          {index: end, value: array[0].value, color: '#E06C6D'},
+          {index: 0, value: array[end].value, color: '#E06C6D'}
         ],
         [
-          {index: end, value: array[0].value, color: 'rebeccapurple'}
+          {index: end, value: array[0].value, color: '#2FAFAF'}
         ]
       );
 
@@ -310,18 +310,18 @@ export class AlgoService {
       const toChange = [];
       if (lastRight != null) {
         toChange.push(
-          {index: lastLeft, value: array[lastLeft].value, color: 'cadetblue'},
-          {index: lastRight, value: array[lastRight].value, color: 'cadetblue'}
+          {index: lastLeft, value: array[lastLeft].value, color: '#8085E9'},
+          {index: lastRight, value: array[lastRight].value, color: '#8085E9'}
         );
       } else if (lastLeft != null) {
         toChange.push(
-          {index: lastLeft, value: array[lastLeft].value, color: 'cadetblue'},
+          {index: lastLeft, value: array[lastLeft].value, color: '#8085E9'},
         );
       }
 
       if (lastStart != null) {
         toChange.push(
-          {index: lastStart, value: array[lastStart].value, color: 'cadetblue'},
+          {index: lastStart, value: array[lastStart].value, color: '#8085E9'},
         );
       }
 
@@ -337,17 +337,17 @@ export class AlgoService {
         lastLeft = left;
         lastRight = right;
         toChange.push(
-          {index: start, value: array[start].value, color: 'lime'},
-          {index: left, value: array[left].value, color: 'lime'},
-          {index: right, value: array[right].value, color: 'lime'}
+          {index: start, value: array[start].value, color: '#E06C6D'},
+          {index: left, value: array[left].value, color: '#E06C6D'},
+          {index: right, value: array[right].value, color: '#E06C6D'}
         );
         swap = arr[left].value > arr[right].value ? left : right;
       } else {
         lastLeft = left;
         lastRight = null;
         toChange.push(
-          {index: start, value: array[start].value, color: 'lime'},
-          {index: left, value: array[left].value, color: 'lime'},
+          {index: start, value: array[start].value, color: '#E06C6D'},
+          {index: left, value: array[left].value, color: '#E06C6D'},
         );
         swap = left;
       }
@@ -358,16 +358,16 @@ export class AlgoService {
       if (arr[start].value < arr[swap].value) {
         change.push(
           [
-            {index: start, value: array[start].value, color: 'crimson'},
-            {index: swap, value: array[swap].value, color: 'crimson'}
+            {index: start, value: array[start].value, color: '#90ED7D'},
+            {index: swap, value: array[swap].value, color: '#90ED7D'}
           ],
           [
-            {index: start, value: array[swap].value, color: 'crimson'},
-            {index: swap, value: array[start].value, color: 'crimson'}
+            {index: start, value: array[swap].value, color: '#90ED7D'},
+            {index: swap, value: array[start].value, color: '#90ED7D'}
           ],
           [
-            {index: start, value: array[swap].value, color: 'lime'},
-            {index: swap, value: array[start].value, color: 'lime'}
+            {index: start, value: array[swap].value, color: '#E06C6D'},
+            {index: swap, value: array[start].value, color: '#E06C6D'}
           ],
         );
         const temp = arr[swap];
@@ -378,7 +378,7 @@ export class AlgoService {
     }
   }
 
-  bubbleSort() {
+  bubbleSort(): void {
     this.sorting.next(true);
     const array: any = JSON.parse(JSON.stringify(this.array.getValue())); // avoid shallow copy of behaviorSubject value
     const change = [];
@@ -389,49 +389,49 @@ export class AlgoService {
       for (let i = 0; i < array.length - 1 - round; i++) {
         if (i > 0) {
           change.push([
-            {index: i - 1, value: array[i - 1].value, color: 'cadetblue'},
-            {index: i, value: array[i].value, color: 'lime'},
-            {index: i + 1, value: array[i + 1].value, color: 'lime'}
+            {index: i - 1, value: array[i - 1].value, color: '#8085E9'},
+            {index: i, value: array[i].value, color: '#E06C6D'},
+            {index: i + 1, value: array[i + 1].value, color: '#E06C6D'}
           ]);
         } else {
           change.push([
-            {index: i, value: array[i].value, color: 'lime'},
-            {index: i + 1, value: array[i + 1].value, color: 'lime'}
+            {index: i, value: array[i].value, color: '#E06C6D'},
+            {index: i + 1, value: array[i + 1].value, color: '#E06C6D'}
           ]);
         }
         if (array[i].value > array[i + 1].value) {
           sorted = false;
           change.push([
-            {index: i, value: array[i].value, color: 'crimson'},
-            {index: i + 1, value: array[i + 1].value, color: 'crimson'}
+            {index: i, value: array[i].value, color: '#90ED7D'},
+            {index: i + 1, value: array[i + 1].value, color: '#90ED7D'}
           ]);
           const temp = array[i];
           array[i] = array[i + 1];
           array[i + 1] = temp;
           change.push([
-            {index: i, value: array[i + 1].value, color: 'crimson'},
-            {index: i + 1, value: array[i].value, color: 'crimson'}
+            {index: i, value: array[i + 1].value, color: '#90ED7D'},
+            {index: i + 1, value: array[i].value, color: '#90ED7D'}
           ]);
         }
         change.push([
-          {index: i, value: array[i].value, color: 'lime'},
-          {index: i + 1, value: array[i + 1].value, color: 'lime'}
+          {index: i, value: array[i].value, color: '#E06C6D'},
+          {index: i + 1, value: array[i + 1].value, color: '#E06C6D'}
         ]);
       }
       round++;
       change.push([
-        {index: array.length - round, value: array[array.length - round].value, color: 'rebeccapurple'},
-        {index: array.length - round - 1, value: array[array.length - round - 1].value, color: 'cadetblue'}
+        {index: array.length - round, value: array[array.length - round].value, color: '#2FAFAF'},
+        {index: array.length - round - 1, value: array[array.length - round - 1].value, color: '#8085E9'}
       ]);
     }
     this.showChange(change);
   }
 
-  showChange(change) {
+  showChange(change): void {
     const arr = this.array.getValue();
     if (!change.length) {
       arr.forEach(el => {
-        el.color = 'rebeccapurple';
+        el.color = '#2FAFAF';
       });
       this.sorting.next(false);
       return;
