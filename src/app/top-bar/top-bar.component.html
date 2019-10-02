@@ -6,7 +6,7 @@
         <div class="border d-none d-sm-block"></div>
         <div class="topElement">
             <span>Change Array size & sorting speed: </span>
-            <mat-slider value="10" color="primary" (input)="changeArrayLength($event)" min="4" max="100" [disabled]="!(sorting$ | async)"></mat-slider>
+            <mat-slider value="10" color="primary" (input)="changeArrayLength($event)" min="4" [max]="maxArrayLength" [disabled]="!(sorting$ | async)"></mat-slider>
         </div>
         <div class="border d-none d-sm-block"></div>
         <div class="topElement d-none d-sm-block">

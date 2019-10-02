@@ -13,7 +13,7 @@ import { MatSliderChange } from '@angular/material/slider';
 export class TopBarComponent implements OnInit {
   arrayLength: BehaviorSubject<number> = new BehaviorSubject<number>(4);
   arrayLength$: Observable<number> = this.arrayLength.asObservable();
-
+  maxArrayLength: number;
   selectedAlgo: string;
   sorting$: Observable<boolean>;
   constructor(
@@ -21,6 +21,8 @@ export class TopBarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(window.innerWidth > 480) this.maxArrayLength = 100;
+    else this.maxArrayLength = 50;
     this.sorting$ = this.algoService.sorting$;
   }
 
