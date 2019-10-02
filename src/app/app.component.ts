@@ -20,12 +20,15 @@ export class AppComponent implements OnInit {
   }
 
   fontSize() {
-    const size = this.arrayLength > 50 ? 0 : 300 / this.arrayLength;
+    let size: number;
+    if(window.innerWidth > 480) size = this.arrayLength > 50 ? 0 : 200 / this.arrayLength;
+    else size = this.arrayLength > 50 ? 0 : 120 / this.arrayLength;
     return {'font-size': size + 'px'};
   }
 
   length(value: string, color: string) {
-    return {height: value + 'px', width: 50 / this.algoService.arrayNumber  + '%', 'background-color': color};
+    if(window.innerWidth > 480) return {height: value + 'px', width: 50 / this.algoService.arrayNumber  + '%', 'background-color': color};
+    else return {height: value + 'px', width: 75 / this.algoService.arrayNumber  + '%', 'background-color': color};
   }
 
 }

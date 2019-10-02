@@ -1,12 +1,19 @@
-header {
+.main-header {
     display: flex;
     background-color: darkgray;
     width: 100%;
     height: 60px;
+
+    @media (max-width:480px) {
+        height: 175px;
+    }
 }
 
-.topElement{
-    // background-color: chartreuse;
+.row {
+    margin: 0 !important;
+}
+
+.topElement {
     margin: auto;
 }
 
@@ -20,18 +27,17 @@ label {
 }
 
 .algoButton {
-    // background-color: peru;
     margin: 0px 20px;
+
+    @media (max-width:480px) {
+        margin: 0;
+    }
 }
 
 .algoButton:focus {
-    color: black; // choose something better
+    color: black;
 }
 
-// button:disabled {
-//     color: inherit;
-// }
-
 button:not([disabled]):hover {
-    color: black; // choose something better
+    color: black;
 }

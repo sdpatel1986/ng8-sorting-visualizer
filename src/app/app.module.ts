@@ -7,6 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {MatSliderModule} from '@angular/material/slider';
     BrowserModule,
     NoopAnimationsModule,
     MatButtonModule,
-    MatSliderModule
+    MatSliderModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

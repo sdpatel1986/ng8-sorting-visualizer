@@ -1,23 +1,38 @@
 <div>
-    <header>
-        <div class="topElement">
+    <div class="main-header row">
+        <div class="topElement d-none d-sm-block">
             <button mat-raised-button color="primary" (click)="generateArray()" [disabled]="!(sorting$ | async)">Generate New array</button>
         </div>
-        <div class="border"></div>
+        <div class="border d-none d-sm-block"></div>
         <div class="topElement">
             <span>Change Array size & sorting speed: </span>
             <mat-slider value="10" color="primary" (input)="changeArrayLength($event)" min="4" max="100" [disabled]="!(sorting$ | async)"></mat-slider>
         </div>
-        <div class="border"></div>
-        <div class="topElement">
+        <div class="border d-none d-sm-block"></div>
+        <div class="topElement d-none d-sm-block">
             <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('mergeSort')" [disabled]="!(sorting$ | async)">Merge sort</button>
             <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('quickSort')" [disabled]="!(sorting$ | async)">Quick sort</button>
             <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('heapSort')" [disabled]="!(sorting$ | async)">Heap sort</button>
             <button class="algoButton" mat-raised-button color="primary" (click)="chooseAlgo('bubbleSort')" [disabled]="!(sorting$ | async)">Bubble sort</button>
         </div>
-        <div class="border"></div>
-        <div class="topElement">
+        <div class="topElement d-block d-sm-none">
+            <mat-form-field>
+                <mat-label>Select type of sort:</mat-label>
+                <mat-select [(value)]="selectedAlgo">
+                    <mat-option value="mergeSort">Merge sort</mat-option>
+                    <mat-option value="quickSort">Quick sort</mat-option>
+                    <mat-option value="heapSort">Heap sort</mat-option>
+                    <mat-option value="bubbleSort">Bubble sort</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="border d-none d-sm-block"></div>
+        <div class="topElement d-block d-sm-none">
+            <button mat-raised-button color="primary" (click)="generateArray()" [disabled]="!(sorting$ | async)">Generate New array</button>
+            <button class="ml-5 sortButton" mat-raised-button color="primary" (click)="sort()" [disabled]="!(sorting$ | async)">Sort</button>
+        </div>
+        <div class="topElement d-none d-sm-block">
             <button class="sortButton" mat-raised-button color="primary" (click)="sort()" [disabled]="!(sorting$ | async)">Sort</button>
         </div>
-    </header>
+    </div>
 </div>
